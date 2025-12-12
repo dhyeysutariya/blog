@@ -1,0 +1,18 @@
+# Virtual environment (machine specific)
+.venv/
+venv/
+
+# Python cache (generated)
+__pycache__/
+*.pyc
+
+# Secrets (must never be committed)
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific (optional but safe)
+.idea/
+.vscode/
