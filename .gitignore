@@ -16,3 +16,7 @@ Thumbs.db
 # IDE-specific (optional but safe)
 .idea/
 .vscode/
+.migrations/*
+
+*.jpg
+*.jpeg
