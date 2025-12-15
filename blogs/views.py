@@ -14,4 +14,10 @@ def posts_by_category(request,category_id):
         'category':category
     }
     return render(request,'posts_by_category.html',data)
-# Create your views here.
+
+def blog_by_slug(request,blog_slug):
+    blog=Blog.objects.get(slug=blog_slug,status='Published')
+    data={
+        'blog':blog
+    }
+    return render(request,'blogs.html',data)    
