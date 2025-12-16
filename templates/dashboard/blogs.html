@@ -1,0 +1,54 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="row">
+  {% include "dashboard/sidebar.html" %}
+
+  <div class="col-md-9">
+    <div class="d-flex justify-content-between">
+    <h2>All Blogs</h2>
+    <a href="{% url "add_blog" %}" class="btn btn-dark text-light float-right mb-2">Add</a>
+    </div>
+        <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Blog Title</th>
+      <th>Category</th>
+      <th>Author</th>
+      <th>Status</th>
+      <th>Featured</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for blog in blogs %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{blog.title}}</td>
+      <td>{{blog.category}}</td>
+      <td>{{blog.author}}</td>
+      <td>{{blog.status}}</td>
+      <td>{{blog.is_featured | yesno:"Yes,No"}}</td>
+      <td>
+        <div class="d-flex gap-3 align-items-center flex-nowrap">
+        <a class="text-dark" href=''>
+            <i class="bi bi-eye text-primary"></i>
+        </a>
+        <a class="text-dark" href=''>
+            <i class="bi bi-pencil-square text-success"></i>
+        </a>
+
+        <a class="text-dark" href=''>
+            <i class="bi bi-trash3 text-danger"></i>
+        </a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

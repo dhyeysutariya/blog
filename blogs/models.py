@@ -27,8 +27,8 @@ class Blog(models.Model):
     blog_body=models.CharField(max_length=2000)
     status=models.CharField(max_length=50,choices=STATUS_CHOICES,default='Draft')
     is_featured=models.BooleanField(default=False)
-    created_at=models.DateTimeField(auto_now_add=False)
-    updated_at=models.DateTimeField(auto_now=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
