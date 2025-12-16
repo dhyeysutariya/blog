@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogs',
     'assignments',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',     
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,3 +126,5 @@ STATICFILES_DIRS=['blog_main/static']
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR/'media'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4' 
