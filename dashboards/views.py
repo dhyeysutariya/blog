@@ -1,10 +1,12 @@
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from blogs.models import Blog, Category
-from dashboards.forms import BlogPostForm, CategoryForm
+from dashboards.forms import AddUserForm, BlogPostForm, CategoryForm, EditUserForm
 from datetime import datetime
 from django.template.defaultfilters import slugify
 from uuid import uuid4
+from django.contrib.auth.models import User
 
 
 @login_required(login_url='login')
@@ -107,3 +109,47 @@ def delete_blog(request,pk):
     blog=get_object_or_404(Blog,pk=pk)
     blog.delete()
     return redirect('blogs')
+
+
+def users(request):
+    users = User.objects.all()
+    data={
+        'users':users
+    }
+    return render(request,'dashboard/users.html',data)
+
+def add_user(request):
+    if request.method == 'POST':
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users')
+    form=AddUserForm()
+    data={
+        'form':form
+    }
+    return render(request,'dashboard/add_user.html',data)
+
+def edit_user(request,pk):
+    user=get_object_or_404(User,pk=pk)
+    form= EditUserForm(instance=user)
+    data={
+        'form':form,
+        'user':user
+    }
+    if request.method == 'POST':
+        form=EditUserForm(request.POST,instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('users')
+        else:
+            print(form.errors)
+    return render(request,'dashboard/edit_user.html',data)
+
+def delete_user(request,pk):
+    if not request.user.has_perm('auth.delete_user'):
+        return HttpResponseForbidden("Forbidden!!! Cannot Delete User")
+
+    user=get_object_or_404(User,pk=pk)
+    user.delete()
+    return redirect('users')

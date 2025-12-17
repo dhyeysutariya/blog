@@ -15,4 +15,10 @@ urlpatterns = [
     path('blogs/add',views.add_blog,name='add_blog'),
     path('blogs/edit/<int:pk>',views.edit_blog,name='edit_blog'),
     path('blogs/delete/<int:pk>',views.delete_blog,name='delete_blog'),
+    
+    #Users
+    path('users/',views.users,name='users'),
+    path('users/add',views.add_user,name='add_user'),
+    path('users/edit/<int:pk>/',views.edit_user,name='edit_user'),
+    path('users/delete/<int:pk>/',views.delete_user,name='delete_user'),
 ]

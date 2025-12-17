@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  {% include "dashboard/sidebar.html" %}
+
+  <div class="col-md-9">
+    {% if perms.auth.view_user %}
+    <div class="d-flex justify-content-between">
+    <h2>All Users</h2>
+    <a href="{% url "add_user" %}" class="btn btn-dark text-light float-right mb-2">Add</a>
+    </div>
+        <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+      <th>Email Address</th>
+      <th>Active</th>
+      <th>Staff</th>
+      <th>Super User</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.is_active}}</td>
+      <td>{% if user.is_staff %}<i class="bi bi-check-circle text-success"></i> {% else %}<i class="bi bi-x text-danger"></i>{% endif %}</td>
+      <td>{% if user.is_superuser %}<i class="bi bi-check-circle text-success"></i> {% else %}<i class="bi bi-x text-danger"></i>{% endif %}</td>
+      <td>
+        <div class="d-flex gap-3 align-items-center flex-nowrap">
+        
+        <a class="text-dark" href='{% url "edit_user" user.id %}'>
+            <i class="bi bi-pencil-square text-success"></i>
+        </a>
+
+        <a class="text-dark" href='{% url "delete_user" user.id %}'>
+            <i class="bi bi-trash3 text-danger"></i>
+        </a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    </div>
+    {% else %}
+    <h1>Unauthorized</h1>
+    {% endif %}
+  </div>
+</div>
+</div>
+
+{% endblock  %}
