@@ -18,7 +18,3 @@ Thumbs.db
 .vscode/
 .migrations/*
 
-*.jpg
-*.jpeg
-*.png
-*.jfif
