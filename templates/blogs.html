@@ -25,11 +25,45 @@
             alt="..."
           />
         </figure>
+
+        
         <!-- Post content-->
         <section class="mb-5">
-          <p class="fs-5 mb-4">
-            {{blog.blog_body}}
-          </p>
+          <p class="fs-5 mb-4">{{blog.short_description}}</p>
+          <p class="fs-5 mb-4">{{blog.blog_body}}</p>
+          
+          <h4>Comments({{comments.count}})</h4>
+          {% if comments %}
+          {% for comment in comments %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <p class="card-text mb-0">{{comment}}</p>
+                <span>
+                  <small>{{comment.user}} |</small>
+                  <small>{{comment.created_at | timesince}}</small>
+                </span>
+
+              </div>
+            </div>
+          {% endfor %}
+          {% else %}
+          No Comments
+          {% endif %}
+          <br>
+          <div class="form-group">
+            {% if user.is_authenticated %}
+            <form action="" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <textarea name="comment" class="form-control" placeholder='Write your comment'></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+            {% else %}
+            <p>PLease <a href='{% url "login" %}'>login</a> to write a comment</p>
+            {% endif %}
+          </div>
         </section>
       </article>
     </div>
