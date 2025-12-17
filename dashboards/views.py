@@ -71,16 +71,39 @@ def add_blog(request):
             post = form.save(commit=False)
             post.author = request.user
 
-            # 1️⃣ temporary unique slug (never empty, never duplicate)
+            # temporary unique slug (never empty, never duplicate)
             base = slugify(form.cleaned_data["title"])
             post.slug = f"{base}-{uuid4().hex[:8]}"
 
-            post.save()  # ✅ first save is safe
+            post.save()  # first save is safe
 
-            # 2️⃣ final human-readable slug using ID
             post.slug = f"{base}-{post.id}"
             post.save(update_fields=["slug"])
 
             return redirect("blogs")
 
     return render(request, "dashboard/add_blog.html", {"form": BlogPostForm()})
+
+def edit_blog(request,pk):
+    blog=get_object_or_404(Blog,pk=pk)
+    form=BlogPostForm(instance=blog)
+
+    data={
+    'form':form,
+    'blog':blog
+    }
+    if request.method == 'POST':
+        form=BlogPostForm(request.POST,request.FILES,instance=blog)
+        if form.is_valid():
+            post = form.save()
+            title=form.cleaned_data['title']
+            post.slug = slugify(title)+ '-' + str(post.id)
+            post.save()
+            return redirect('blogs')
+
+    return render(request,'dashboard/edit_blog.html',data)
+
+def delete_blog(request,pk):
+    blog=get_object_or_404(Blog,pk=pk)
+    blog.delete()
+    return redirect('blogs')

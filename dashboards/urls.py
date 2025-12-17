@@ -13,4 +13,6 @@ urlpatterns = [
     #Posts/Blogs
     path('blogs/',views.blogs,name='blogs'),
     path('blogs/add',views.add_blog,name='add_blog'),
+    path('blogs/edit/<int:pk>',views.edit_blog,name='edit_blog'),
+    path('blogs/delete/<int:pk>',views.delete_blog,name='delete_blog'),
 ]
